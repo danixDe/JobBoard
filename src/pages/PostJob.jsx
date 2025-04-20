@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { json, useNavigate } from 'react-router-dom';
 
   function PostJob() {
   const navigate = useNavigate();
@@ -14,7 +14,11 @@ import { useNavigate } from 'react-router-dom';
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Job Posted:', jobData);
+    const existJobs = JSON.parse(localStorage.getItem('jobs')) || [];
+    const newJob = {id: Date.now(), ...jobData};
+    const updatedJobs = [...existJobs, newJob];
+    localStorage.setItem('jobs', JSON.stringify(updatedJobs));
+    alert('Job Posted!');
     navigate('/dashboard');
   };
 

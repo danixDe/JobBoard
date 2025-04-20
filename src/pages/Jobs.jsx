@@ -1,39 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import { SearchIcon, MapPinIcon, FilterIcon } from 'lucide-react';
 
-const dummyJobs = [
-  {
-    id: 1,
-    title: 'Senior React Developer',
-    company: 'Tech Corp',
-    location: 'Remote',
-    salary: '$120,000 - $150,000',
-    type: 'Full-time',
-    posted: '2 days ago',
-  },
-  {
-    id: 2,
-    title: 'Product Manager',
-    company: 'Innovation Labs',
-    location: 'New York, NY',
-    salary: '$100,000 - $130,000',
-    type: 'Full-time',
-    posted: '3 days ago',
-  },
-  {
-    id: 3,
-    title: 'UX Designer',
-    company: 'Design Studio',
-    location: 'San Francisco, CA',
-    salary: '$90,000 - $120,000',
-    type: 'Full-time',
-    posted: '1 week ago',
-  },
-];
 
 function Jobs() {
+  const [dummyJobs, setDummyJobData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [location, setLocation] = useState('');
+  useEffect(()=>{
+    const stored = localStorage.getItem('jobData');
+    if(stored){
+      const parsed = JSON.parse(stored);
+      setDummyJobData(Array.isArray(parsed) ? parsed : []);
+    };
+
+  }, []);
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
